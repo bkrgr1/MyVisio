@@ -1,2 +1,2 @@
 # MyVisio
-A Visio-like drawing application
+A Visio-like drawing application based on Java Swing/AWT.
