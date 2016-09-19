@@ -24,8 +24,8 @@ public class SVGPathSegCurvetoCubicRelImpl extends SVGPathSegImpl implements
 	 * @param x22
 	 * @param y22
 	 */
-	public SVGPathSegCurvetoCubicRelImpl(float x3, float y3, float x12,
-			float y12, float x22, float y22) {
+	public SVGPathSegCurvetoCubicRelImpl(float x3, float y3, float x2,
+			float y2, float x, float y) {
 		// TODO Auto-generated constructor stub
 	}
 

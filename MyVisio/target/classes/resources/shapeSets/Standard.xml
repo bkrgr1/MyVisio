@@ -61,7 +61,7 @@
 		    <title>Document</title>
 		    <desc>A document created as output or used as input.</desc>
 		    <g class="shapeBox">
-		        <path d="M 90 80 L 90 20 L 10 20 L 10 80 C 50 80 10 90 50 90 S 90 80 90 70"
+		        <path d="M 90 80 L 90 20 L 10 20 L 10 80 C 10 90 45 90 50 80 S 90 70 90 80"
 		            fill="white" stroke="black" />
 		    </g>
 		</shape>

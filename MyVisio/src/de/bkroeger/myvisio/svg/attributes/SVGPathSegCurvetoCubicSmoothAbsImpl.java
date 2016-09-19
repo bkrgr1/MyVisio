@@ -10,6 +10,8 @@ import org.w3c.dom.svg.SVGPathSegCurvetoCubicRel;
 import org.w3c.dom.svg.SVGPathSegCurvetoCubicSmoothAbs;
 import org.w3c.dom.svg.SVGPathSegCurvetoCubicSmoothRel;
 
+import java.util.logging.Logger;
+
 import de.bkroeger.myvisio.svg.elements.SVGBasicShapeElementImpl;
 
 /**
@@ -29,6 +31,8 @@ public class SVGPathSegCurvetoCubicSmoothAbsImpl extends SVGPathSegImpl implemen
 
 	private static final long serialVersionUID = -6722776032077341870L;
 	
+	private static final Logger logger = Logger.getLogger(SVGPathSegCurvetoCubicSmoothAbsImpl.class.getName());
+	
 	private float x2;
 	private float y2;
 
@@ -38,9 +42,11 @@ public class SVGPathSegCurvetoCubicSmoothAbsImpl extends SVGPathSegImpl implemen
 	 * @param x2
 	 * @param y2
 	 */
-	public SVGPathSegCurvetoCubicSmoothAbsImpl(float x, float y, float x2,
-			float y2) {
-		// TODO Auto-generated constructor stub
+	public SVGPathSegCurvetoCubicSmoothAbsImpl(float x2, float y2, float x, float y) {
+		this.x = x;
+		this.y = y;
+		this.x2 = x2;
+		this.y2 = y2;
 	}
 
 	@Override
@@ -84,6 +90,7 @@ public class SVGPathSegCurvetoCubicSmoothAbsImpl extends SVGPathSegImpl implemen
 			Graphics2D g2d, SVGPathSeg prevSeg) {
 		
 		Point2D.Float p1 = new Point2D.Float(this.getX(), this.getY());
+		logger.info("Current point="+p1.x+"/"+p1.y);
 		Point2D.Float p1c = ((SVGBasicShapeElementImpl)shape).convertCoordinate(p1);
 		
 		Point2D.Float prevPt = new Point2D.Float(prevSeg.getX(), prevSeg.getY());
@@ -101,15 +108,18 @@ public class SVGPathSegCurvetoCubicSmoothAbsImpl extends SVGPathSegImpl implemen
 		} else {
 			p = prevPt;
 		}
+		logger.info("Previous point="+p.x+"/"+p.y);
 		float dX = p.x - prevPt.x;
 		float dY = p.y - prevPt.y;
 		Point2D.Float c1 = new Point2D.Float(prevPt.x - dX, prevPt.y - dY);
 		Point2D.Float c1c = ((SVGBasicShapeElementImpl)shape).convertCoordinate(c1);
+		logger.info("Control point 1="+c1.x+"/"+c1.y);
 		
 		Point2D.Float c2 = new Point2D.Float(this.getX2(), this.getY2());
 		Point2D.Float c2c = ((SVGBasicShapeElementImpl)shape).convertCoordinate(c2);
+		logger.info("Control point 2="+c2.x+"/"+c2.y);
 		
-		path2d.curveTo(p1c.x, p1c.y, c1c.x, c1c.y, c2c.x, c2c.y);
+		path2d.curveTo(c1c.x, c1c.y, c2c.x, c2c.y, p1c.x, p1c.y);
 		return path2d;
 	}
 }

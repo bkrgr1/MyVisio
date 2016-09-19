@@ -362,11 +362,11 @@ implements SVGPathElement, SVGShapeElement {
 	}
 
 	
-	public SVGPathSegCurvetoCubicAbs createSVGPathSegCurvetoCubicAbs(float x,
-			float y, float x1, float y1, float x2, float y2) {
+	public SVGPathSegCurvetoCubicAbs createSVGPathSegCurvetoCubicAbs(
+			float x1, float y1, float x2, float y2, float x, float y) {
 
-		SVGPathSegCurvetoCubicAbs pathSeg = new SVGPathSegCurvetoCubicAbsImpl(x, y,
-				x1, y1, x2, y2);
+		SVGPathSegCurvetoCubicAbs pathSeg = new SVGPathSegCurvetoCubicAbsImpl(
+				x1, y1, x2, y2, x, y);
 		pathData.getPathSegList().appendItem(pathSeg);
 		return pathSeg;
 	}
@@ -457,20 +457,20 @@ implements SVGPathElement, SVGShapeElement {
 
 	
 	public SVGPathSegCurvetoCubicSmoothAbs createSVGPathSegCurvetoCubicSmoothAbs(
-			float x, float y, float x2, float y2) {
+			float x2, float y2, float x, float y) {
 
-		SVGPathSegCurvetoCubicSmoothAbs pathSeg = new SVGPathSegCurvetoCubicSmoothAbsImpl(x, y,
-				x2, y2);
+		SVGPathSegCurvetoCubicSmoothAbs pathSeg = new SVGPathSegCurvetoCubicSmoothAbsImpl(
+				x2, y2, x, y);
 		pathData.getPathSegList().appendItem(pathSeg);
 		return pathSeg;
 	}
 
 	
 	public SVGPathSegCurvetoCubicSmoothRel createSVGPathSegCurvetoCubicSmoothRel(
-			float x, float y, float x2, float y2) {
+			float x2, float y2, float x, float y) {
 
-		SVGPathSegCurvetoCubicSmoothRel pathSeg = new SVGPathSegCurvetoCubicSmoothRelImpl(x, y,
-				x2, y2);
+		SVGPathSegCurvetoCubicSmoothRel pathSeg = new SVGPathSegCurvetoCubicSmoothRelImpl(
+				x2, y2, x, y);
 		pathData.getPathSegList().appendItem(pathSeg);
 		return pathSeg;
 	}
@@ -628,23 +628,23 @@ implements SVGPathElement, SVGShapeElement {
 			i += 7;
 			break;
 		case "C":
-			x = convertToFloat(parts[i+1]);
-			y = convertToFloat(parts[i+2]);
-			x1 = convertToFloat(parts[i+3]);
-			y1 = convertToFloat(parts[i+4]);
-			x2 = convertToFloat(parts[i+5]);
-			y2 = convertToFloat(parts[i+6]);
-			createSVGPathSegCurvetoCubicAbs(x, y, x1, y1, x2, y2);
+			x1 = convertToFloat(parts[i+1]);
+			y1 = convertToFloat(parts[i+2]);
+			x2 = convertToFloat(parts[i+3]);
+			y2 = convertToFloat(parts[i+4]);
+			x = convertToFloat(parts[i+5]);
+			y = convertToFloat(parts[i+6]);
+			createSVGPathSegCurvetoCubicAbs(x1, y1, x2, y2, x, y);
 			i += 6;
 			break;
 		case "c":
-			x = convertToFloat(parts[i+1]);
-			y = convertToFloat(parts[i+2]);
-			x1 = convertToFloat(parts[i+3]);
-			y1 = convertToFloat(parts[i+4]);
-			x2 = convertToFloat(parts[i+5]);
-			y2 = convertToFloat(parts[i+6]);
-			createSVGPathSegCurvetoCubicRel(x, y, x1, y1, x2, y2);
+			x1 = convertToFloat(parts[i+1]);
+			y1 = convertToFloat(parts[i+2]);
+			x2 = convertToFloat(parts[i+3]);
+			y2 = convertToFloat(parts[i+4]);
+			x = convertToFloat(parts[i+5]);
+			y = convertToFloat(parts[i+6]);
+			createSVGPathSegCurvetoCubicRel(x1, y1, x2, y2, x, y);
 			i += 6;
 			break;
 		case "H":
@@ -698,19 +698,19 @@ implements SVGPathElement, SVGShapeElement {
 			i += 4;
 			break;
 		case "S":
-			x = convertToFloat(parts[i+1]);
-			y = convertToFloat(parts[i+2]);
-			x1 = convertToFloat(parts[i+3]);
-			y1 = convertToFloat(parts[i+4]);
-			createSVGPathSegCurvetoCubicSmoothAbs(x, y, x1, y1);
+			x2 = convertToFloat(parts[i+1]);
+			y2 = convertToFloat(parts[i+2]);
+			x = convertToFloat(parts[i+3]);
+			y = convertToFloat(parts[i+4]);
+			createSVGPathSegCurvetoCubicSmoothAbs(x2, y2, x, y);
 			i += 4;
 			break;
 		case "s":
-			x = convertToFloat(parts[i+1]);
-			y = convertToFloat(parts[i+2]);
-			x1 = convertToFloat(parts[i+3]);
-			y1 = convertToFloat(parts[i+4]);
-			createSVGPathSegCurvetoCubicSmoothRel(x, y, x1, y1);
+			x2 = convertToFloat(parts[i+1]);
+			y2 = convertToFloat(parts[i+2]);
+			x = convertToFloat(parts[i+3]);
+			y = convertToFloat(parts[i+4]);
+			createSVGPathSegCurvetoCubicSmoothRel(x2, y2, x, y);
 			i += 4;
 			break;
 		case "T":
