@@ -1,0 +1,17 @@
+de.bkroeger.myvisio
+de.bkroeger.myvisio.controller
+de.bkroeger.myvisio.controller.commands
+de.bkroeger.myvisio.css
+de.bkroeger.myvisio.data
+de.bkroeger.myvisio.model
+de.bkroeger.myvisio.shapes
+de.bkroeger.myvisio.svg
+de.bkroeger.myvisio.svg.attributes
+de.bkroeger.myvisio.svg.elements
+de.bkroeger.myvisio.utility
+de.bkroeger.myvisio.vector
+de.bkroeger.myvisio.view
+de.bkroeger.myvisio.view.menu
+de.bkroeger.myvisio.windows
+org.w3c.dom.smil
+org.w3c.dom.svg

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<myvisio category="Software">
+    <desc>
+        Erster Versuch
+    </desc>
+    
+	<shape-sets>
+		<set name="StandardShapes" xmlns="http://de.bkroeger.de/2015/myvisio">
+		</set>
+	</shape-sets>
+	
+	<pages>
+		<page pageno="1" uuid="">
+
+			<svg id="DefaultShapeSet" version="1.1" xmlns="http://www.w3.org/2000/svg"
+				x="0" y="0" width="300" height="240">
+
+				<desc>
+				    
+					Zeige das Template in 3 Spalten und 2 Zeilen an.
+					Je Shape eine
+					Box von 100x100 + Textbox von 100x20
+				</desc>
+
+				<shape id="Shape1">
+					<title>Square Group</title>
+
+					<box class="shapeBox">
+
+						<rect x="30" y="30" width="40" height="40" stroke="yellow"
+							fill="brown">
+							<title>Square</title>
+							<desc>Ein Quadrat</desc>
+						</rect>
+					</box>
+					<text x="5" y="102">Square</text>
+				</shape>
+
+				<shape id="Shape2" transform="translate(100, 0)">
+					<title>Circle Group</title>
+
+					<g class="shapeBox">
+						<circle cx="50" cy="50" r="20" fill="#ffaa00" stroke="black"
+							stroke-width="1px" stroke-dasharray="2 2">
+							<title>Circle</title>
+							<desc>Ein Kreis</desc>
+						</circle>
+					</g>
+					<text x="5" y="102">Circle</text>
+				</shape>
+
+				<shape id="Shape3" transform="translate(200, 0)">
+					<title>Ellipse Group</title>
+
+					<g class="shapeBox">
+						<ellipse cx="50" cy="50" rx="30" ry="20" stroke="blue"
+							stroke-width="1px" stroke-dasharray="7 , 3" fill="red">
+							<title>Ellipse</title>
+							<desc>Eine Ellipse</desc>
+						</ellipse>
+					</g>
+					<text x="5" y="118">Ellipse</text>
+				</shape>
+
+				<shape id="Shape4" transform="translate(0,100)">
+					<title>Triangle Group</title>
+
+					<g class="shapeBox">
+						<path d="M 10 90 L 50 10 L 90 90 z">
+							<title>Triangle</title>
+							<desc>Ein Dreieck</desc>
+						</path>
+					</g>
+					<text x="5" y="238">Triangle</text>
+				</shape>
+
+			</svg>
+		</page>
+	</pages>
+</myvisio>

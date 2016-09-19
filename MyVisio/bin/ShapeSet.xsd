@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="shape-set">
+  <xs:complexType>
+   <xs:sequence>
+    <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+    <xs:element name="svg" type="svgType" minOccurs="0" maxOccurs="1" />
+   </xs:sequence>
+   <xs:attribute name="id" type="xs:string" />
+   <xs:attribute name="name" type="xs:string" use="required" />
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="svgType">
+ <xs:complexType>
+  <xs:sequence>
+   <xs:element name="animationElement" type="animationElements" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="descriptiveElement" type="descriptiveElements" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="structuralElement" type="structuralElements" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="shapeElement" type="shapeElements" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="gradientElement" type="gradientElements" minOccurs="0" maxOccurs="unbounded" />
+   <!-- other elements -->
+   <xs:element name="a" type="aType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="altGlyphDef" type="altGlyphDefType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="clipPath" type="clipPathType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="color-profile" type="color-profileType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="cursor" type="cursorType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="filter" type="filterType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="font" type="fontType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="font-face" type="font-faceType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="foreignObject" type="foreignObjectType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="image" type="imageType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="marker" type="markerType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="mask" type="maskType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="pattern" type="patternType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="script" type="scriptType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="stype" type="styleType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="switch" type="switchType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="text" type="textType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="view" type="viewType" minOccurs="0" maxOccurs="unbounded" />
+  </xs:sequence>
+  <!-- Core attributes -->
+  <xs:attribute name="id" type="xs:string" />
+  <xs:attribute name="xml:base" type="xs:string" />
+  <xs:attribute name="xml:lang" type="xs:string" />
+  <xs:attribute name="xml:space" type="xs:string" />
+  <!-- conditional processing attributes -->
+  <xs:attribute name="requiredExtension" type="xs:string" />
+  <xs:attribute name="requiredFeature" type="xs:string" />
+  <xs:attribute name="systemLanguage" type="xs:string" />
+  <!-- document event attributes -->
+  <xs:attribute name="onabort" type="xs:string" />
+  <xs:attribute name="onerror" type="xs:string" />
+  <xs:attribute name="onresize" type="xs:string" />
+  <xs:attribute name="onscroll" type="xs:string" />
+  <xs:attribute name="onunload" type="xs:string" />
+  <xs:attribute name="onzoom" type="xs:string" />
+  <!-- graphical event attributes -->
+  <xs:attribute name="onactivate" type="xs:string" />
+  <xs:attribute name="onclick" type="xs:string" />
+  <xs:attribute name="onfocusin" type="xs:string" />
+  <xs:attribute name="onfocusout" type="xs:string" />
+  <xs:attribute name="onload" type="xs:string" />
+  <xs:attribute name="onmousedown" type="xs:string" />
+  <xs:attribute name="onmousemove" type="xs:string" />
+  <xs:attribute name="onmouseout" type="xs:string" />
+  <xs:attribute name="onmouseover" type="xs:string" />
+  <xs:attribute name="onmouseup" type="xs:string" />
+  <!-- other attributes -->
+  <xs:attribute name="class" type="xs:string" />
+  <xs:attribute name="style" type="xs:string" />
+  <xs:attribute name="externalResourcesRequired type="xs:boolean" />
+  <xs:attribute name="x" type="xs:integer" />
+  <xs:attribute name="y" type="xs:integer" />
+  <xs:attribute name="width" type="xs:integer" />
+  <xs:attribute name="height" type="xs:integer" />
+  <xs:attribute name="viewbox" type="xs:string" />
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="animationElements">
+ <xs:complexType>
+  <xs:choice>
+   <xs:element name="animateColor" type="animateColorType" />
+   <xs:element name="animateMotion" type="animateMotionType" />
+   <xs:element name="animateTransform" type="animateTransformType" />
+   <xs:element name="animate" type="animateType" />
+   <xs:element name="set" type="setType" />
+  </xs:choice>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="descriptiveElements">
+ <xs:complexType>
+  <xs:choice>
+   <xs:element name="desc" type="descType" />
+   <xs:element name="metadata" type="metadataType" />
+   <xs:element name="title" type="titleType" />
+  </xs:choice>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="structuralElements">
+ <xs:complexType>
+  <xs:choice>
+   <xs:element name="defs" type="defsType" />
+   <xs:element name="svg" type="svgType" />
+   <xs:element name="g" type="gType" />
+   <xs:element name="symbol" type="symbolType" />
+   <xs:element name="use" type="useType" />
+  </xs:choice>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="shapeElements">
+ <xs:complexType>
+  <xs:choice>
+   <xs:element name="path" type="pathType" />
+   <xs:element name="rect" type="rectType" />
+   <xs:element name="circle" type="circleType" />
+   <xs:element name="ellipse" type="ellipseType" />
+   <xs:element name="line" type="lineType" />
+   <xs:element name="polyline" type="polylineType" />
+   <xs:element name="polygon" type="polygonType" />
+  </xs:choice>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="gradientElements">
+ <xs:complexType>
+  <xs:choice>
+   <xs:element name="linearGradient" type="linearGradientType" />
+   <xs:element name="radialGradient" type="radialGradientType" />
+  </xs:choice>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="gType">
+ <xs:complexType>
+  <xs:sequence>
+   <xs:element name="transform" type="transformType" minOccurs="0" maxOccurs="unbounded" />
+   <xs:element name="graphic" type="graphicType" minOccurs="1" maxOccurs="unbounded" />
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="transformType">
+ <xs:complexType>
+  <xs:choice>
+   <xs:element name="translate" type="translateType" />
+   <xs:element name="rotate"    type="rotateType" />
+   <xs:element name="scale"     type="scaleType" />
+   <xs:element name="matrix"    type="matrixType" />
+   <xs:element name="skewX"     type="skewXType" />
+   <xs:element name="skewY"     type="skewYType" />
+  </xs:choise>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="graphicType" >
+   <xs:complexType>
+    <xs:choice>
+     <xs:element name="group" type="group" />
+     <xs:element name="circle" type="circle" />
+     <xs:element name="ellipse" type="ellipse" />
+     <xs:element name="image" type="image" />
+     <xs:element name="line"  type="line" />
+     <xs:element name="path" type="path" />
+     <xs:element name="polygon" type="polygon" />
+     <xs:element name="polyline" type="polyline" />
+     <xs:element name="rect" type="rect" />
+     <xs:element name="text" type="text" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" />
+   </xs:complexType>
+</xs:element>
+
+<xs:element name="circle">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="ellipse">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="image">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="line">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="path">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="polygon">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="polyline">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="rect">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="text">
+ <xs:complexType>
+  <xs:sequence>
+  </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+</xs:schema>

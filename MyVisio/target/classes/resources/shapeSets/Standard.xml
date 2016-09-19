@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<shapeset name="StandardShapes" xmlns="http://de.bkroeger.de/2015/myvisio">
+
+	<shapes>
+
+		<!-- Das Shape wird in einer quadratischen Box von virtuell 100 x 100 units 
+			angezeigt -->
+		<shape id="Shape1" uuid="84977c4c-7aa9-11e6-8b77-86f30ca893d3"
+		    width="100" height="100">
+			<title>Process-Shape</title>
+			<desc>One step in the process; the step is written inside the box. Usually, only one arrow goes out of the box.</desc>
+			<g class="shapeBox">
+				<rect x="10" y="20" width="80" height="60" 
+				    stroke="black"
+					fill="white">
+					<desc>Process</desc>
+				</rect>
+			</g>
+			<text x="10" y="98">Process</text>
+		</shape>
+
+		<shape id="Shape2" uuid="eb4b0e3a-7ab4-11e6-8b77-86f30ca893d3"
+		    width="100" height="100">
+			<title>Sequ. Data</title>
+			<desc>A sequential data file</desc>
+			<g class="shapeBox">
+				<circle cx="50" cy="50" r="30" 
+				    fill="white" stroke="black">
+				</circle>
+				<path d="M 50 80 L 80 80" stroke="black" />
+			</g>
+			<text x="5" y="98">Sequ. Data</text>
+		</shape>
+
+		<shape id="Shape3" uuid="cfdec808-7ab4-11e6-8b77-86f30ca893d3"
+		    width="100" height="100">
+			<title>Alternate end point</title>
+			<desc>The end point of a process (alternate shape).</desc>
+			<g class="shapeBox">
+				<ellipse cx="50" cy="50" rx="35" ry="25" 
+				    stroke="black" fill="white">
+				</ellipse>
+				<text x="5" y="98">End point</text>
+			</g>
+		</shape>
+
+		<shape id="Shape4" uuid="bb6e3a20-7ab4-11e6-8b77-86f30ca893d3"
+		    width="100" height="100">
+			<title>Decision</title>
+			<desc>Decision based on a question. The question is written in the diamond. More than one arrow goes out of the diamond, each one showing the direction the process takes for a given answer to the question.</desc>
+			<g class="shapeBox">
+				<path d="M 50 20 L 90 50 L 50 80 L 10 50 z" 
+				    fill="white" stroke="black">
+				</path>
+			</g>
+			<text x="5" y="98">Decision</text>
+		</shape>
+		
+		<shape id="Shape5" uuid="bacbcd30-7d0c-11e6-ae22-56b6b6499611"
+		    width="100" height="100">
+		    <title>Document</title>
+		    <desc>A document created as output or used as input.</desc>
+		    <g class="shapeBox">
+		        <path d="M 90 80 L 90 20 L 10 20 L 10 80 C 50 80 10 90 50 90 S 90 80 90 70"
+		            fill="white" stroke="black" />
+		    </g>
+		</shape>
+
+		<shape id="Shape5" width="100" height="100">
+			<title>Rechtwinkliger Verbinder</title>
+
+			<g class="shapeBox">
+				<path d="M 73 4 L 79 4 L 79 10 L 73 10 z" 
+				    stroke="black" stroke-width="0.5">
+				</path>
+			    <path d="M 76 10 L 76 45 L 24 45 L 24 76 " 
+				    stroke="black">
+					<title>Verbinder</title>
+					<desc>Ein rechtwinkliger Verbinder</desc>
+				</path>
+				<path d="M 21 76 L 27 76 L 27 82 L 21 82 z" 
+				    stroke="black" stroke-width="0.5">
+				</path>
+			</g>
+			<text x="5" y="98">Connector</text>
+		</shape>
+		
+	</shapes>
+</shapeset>
