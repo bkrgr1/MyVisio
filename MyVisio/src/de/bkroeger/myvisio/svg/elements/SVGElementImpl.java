@@ -698,6 +698,11 @@ public class SVGElementImpl extends DefaultMutableTreeNode
 			ellipseElem.parseXml(childElem);
 			break;
 		case "line":
+			// <line>-Element erstellen
+			SVGLineElementImpl lineElem = new SVGLineElementImpl();
+			this.add(lineElem);
+			lineElem.setParent(this);
+			lineElem.parseXml(childElem);
 			break;
 		case "polyline":
 			break;
