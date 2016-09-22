@@ -50,6 +50,7 @@ public class ShapeSetView extends JPanel {
 	
 	private static final int SHAPE_WIDTH = 65;
 	private static final int SHAPE_HEIGHT = 65;
+	private static final int LABEL_HEIGHT = 12;
 	
 	private static final int VGAP = 5;
 	private static final int HGAP = 5;
@@ -109,7 +110,7 @@ public class ShapeSetView extends JPanel {
 		gridPanel.setBackground(new Color(161, 212, 144));	// #A1D490
 		
 		int shapeCnt = controller.getShapeCount();
-		this.colCnt = (navigatorWidth - 10) / SHAPE_WIDTH;
+		this.colCnt = (navigatorWidth - 10) / (SHAPE_WIDTH);
 		this.rowCnt = shapeCnt / colCnt;
 		if ((shapeCnt % colCnt) > 0) {
 			rowCnt++;
@@ -117,7 +118,7 @@ public class ShapeSetView extends JPanel {
 		
 		// Grösse des GridPanel berechnen
 		Dimension gridDim = new Dimension((colCnt * SHAPE_WIDTH) + (colCnt * VGAP), 
-				(rowCnt * SHAPE_HEIGHT) + (rowCnt * HGAP));
+				(rowCnt * (SHAPE_HEIGHT + LABEL_HEIGHT)) + (rowCnt * HGAP));
 		gridPanel.setSize(gridDim);
 		gridPanel.setPreferredSize(gridDim);
 		
@@ -159,8 +160,9 @@ public class ShapeSetView extends JPanel {
 	
 	private ShapeController createShapeController(IShape shape) {
 		
-		Dimension dim = new Dimension(SHAPE_WIDTH-(HGAP*2), SHAPE_HEIGHT-(VGAP*2));
-		ShapeController shapeController = new ShapeController(dim, shape);
+		Dimension shapeDimension = new Dimension(SHAPE_WIDTH-HGAP, SHAPE_HEIGHT-VGAP);
+		Dimension labelDimension = new Dimension(SHAPE_WIDTH-HGAP, LABEL_HEIGHT);
+		ShapeController shapeController = new ShapeController(shapeDimension, shape, labelDimension);
 		return shapeController;
 	}
 	

@@ -28,15 +28,15 @@ public class ShapeView extends JPanel {
 	private ShapeController controller;
 
 	/**
-	 * @param dim
+	 * @param shapeDimension
 	 * @param controller 
 	 */
-	public ShapeView(Dimension dim, ShapeController controller) {
+	public ShapeView(Dimension shapeDimension, ShapeController controller) {
 		
 		this.controller = controller;
 		IShape shape = controller.getModel();
 		
-		this.setPreferredSize(dim);
+		this.setPreferredSize(shapeDimension);
 		this.setBackground(new Color(0, 0, 0, 1));
 //		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.setOpaque(true);
