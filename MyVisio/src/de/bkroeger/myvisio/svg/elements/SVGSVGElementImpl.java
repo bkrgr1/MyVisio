@@ -83,14 +83,16 @@ public class SVGSVGElementImpl extends SVGStructuralElementImpl implements SVGSV
 	protected SVGAnimatedLength y;
 	
 	protected SVGAnimatedLength width;
+	protected void setWidth(SVGAnimatedLength width) { this.width = width; }
 	
 	protected SVGAnimatedLength height;
+	protected void setHeight(SVGAnimatedLength height) { this.height = height; }
 	
 	private SVGRect viewport;
 	
 	private SVGColorAttributeImpl currentFillColor;
 	
-	private SVGAnimatedTransformList savedTransformList;
+	private SVGAnimatedTransformList viewportTransformList;
 	
 	/**
 	 * @return - Farbe
@@ -154,49 +156,55 @@ public class SVGSVGElementImpl extends SVGStructuralElementImpl implements SVGSV
 	}
 	
 	/**
+	 * <p>
 	 * Passt die Grösse des SVG-Elementes an die Grösse
 	 * des Viewports an. Hieraus ergibt sich ein horizontaler und vertikaler 
 	 * Umrechnungsfaktor für dimensionslose Units.
-	 * 
+	 * </p><p>
+	 * Die zusätzlichen Tranformationen werden in der viewportTransformList
+	 * gespeichert, welche zu Beginn der Negotiation immer gelöscht wird.
+	 * </p>
 	 * @param viewport - die View-Spezifikation des Template-Bereiches
 	 */
 	public void negotiateViewport(SVGRect viewport) {
 		
 		logger.entering(TemplateSet.class.getName(), "negotiateViewport", 
 			new Object[] { viewport });
-		
-		if (savedTransformList == null) {
-			savedTransformList = (SVGAnimatedTransformList) ((SVGAnimatedTransformListImpl) this.transformList).clone();
-		} else {
-			this.transformList = (SVGAnimatedTransformList) ((SVGAnimatedTransformListImpl)savedTransformList).clone();
-		}
-		
+				
 		this.viewport = viewport;
+		this.viewportTransformList = null;
 		
-		// Beginnt der Viewport nicht auf den Koordinaten (0,0)?
-		if (this.viewport.getX() != 0.0f || this.viewport.getY() != 0.0f) {
+		if (viewport != null) {
 			
+			// neue Transform-List erstellen
+			this.viewportTransformList = new SVGAnimatedTransformListImpl();
+			
+			// Beginnt der Viewport nicht auf den Koordinaten (0,0)?
 			// Translate-Transformation erstellen
-			SVGTransform translateTransform = new SVGTransformImpl(SVGTransform.SVG_TRANSFORM_TRANSLATE);
-			translateTransform.setTranslate(
-				this.viewport.getX(), this.viewport.getY());
-			this.transformList.getAnimVal().insertItemBefore(translateTransform, 0);
+			if (this.viewport.getX() != 0.0f || this.viewport.getY() != 0.0f) {
+				
+				// Translate-Transformation erstellen
+				SVGTransform translateTransform = new SVGTransformImpl(SVGTransform.SVG_TRANSFORM_TRANSLATE);
+				translateTransform.setTranslate(
+					this.viewport.getX(), this.viewport.getY());
+				this.viewportTransformList.getAnimVal().insertItemBefore(translateTransform, 0);
+			}
+			
+			// Scale-Transformation berechnen:
+			// das Verhältnis der verfübaren Breite zur Breite des SVG-Elementes
+			// und das entsprechende Verhältnis der Höhe.
+			// Wenn ein Wert im Viewport mit -1 angegeben ist, wird der Wert aus
+			// dem SVG-Element unverändert übernommen.
+			SVGTransform scaleTransform = new SVGTransformImpl(SVGTransform.SVG_TRANSFORM_SCALE);
+			scaleTransform.setScale(
+				this.viewport.getWidth() == -1.0f ?
+					1.0f :
+					this.viewport.getWidth() / this.width.getAnimVal().getValue(),
+				this.viewport.getHeight() == -1.0f ?
+					1.0f : 
+					this.viewport.getHeight() / this.width.getAnimVal().getValue());
+			this.viewportTransformList.getAnimVal().insertItemBefore(scaleTransform, 0);
 		}
-		
-		// Scale-Transformation berechnen:
-		// das Verhältnis der verfübaren Breite zur Breite des SVG-Elementes
-		// und das entsprechende Verhältnis der Höhe.
-		// Wenn ein Wert im Viewport mit -1 angegeben ist, wird der Wert aus
-		// dem SVG-Element unverändert übernommen.
-		SVGTransform scaleTransform = new SVGTransformImpl(SVGTransform.SVG_TRANSFORM_SCALE);
-		scaleTransform.setScale(
-			this.viewport.getWidth() == -1.0f ?
-				1.0f :
-				this.viewport.getWidth() / this.width.getAnimVal().getValue(),
-			this.viewport.getHeight() == -1.0f ?
-				1.0f : 
-				this.viewport.getHeight() / this.width.getAnimVal().getValue());
-		this.transformList.getAnimVal().insertItemBefore(scaleTransform, 0);
 	}
 
 	/**
@@ -792,26 +800,63 @@ public class SVGSVGElementImpl extends SVGStructuralElementImpl implements SVGSV
 		return null;
 	}
 	
+	/**
+	 * <p>
+	 * Konvertiert die übergebenen Punkt-Koordinaten mittels der
+	 * Transform-Liste des SVG-Elementes.
+	 * </p><p>
+	 * Wenn ein Viewport definiert wurde und sich daraus Transformationen
+	 * ergeben, so werden diese ebenfalls angewendet.
+	 * </p><p>
+	 * Wenn kein Viewport definiert wurde, werden die Transformationen
+	 * eines evtl. vorhandenen Parent-Elementes angewendet.
+	 * </p>
+	 * @param p1 - der zu konvertierende Punkt
+	 * @return - der konvertierte Punkt
+	 */
 	public Point2D.Float convertCoordinate(Point2D.Float p1) {
 		
 		Point2D.Float p = p1;
 		if (this.transformList != null && this.transformList.getAnimVal() != null) {
 			SVGTransformList transformList = this.transformList.getAnimVal();
-			for (long i=transformList.getNumberOfItems()-1; i>=0; i--) {
-				SVGTransformImpl transformImpl = (SVGTransformImpl) transformList.getItem(i);
-				Point2D.Float q = p1;
-				p = transformImpl.transform(p);
-				logger.info(String.format("SVGSVGElementImpl::convertCoordinate From=%f/%f To=%f/%f",
-						q.x, q.y, p.x, p.y));
-			}
+			p = convertCoordinateByTransformList(p1, p, transformList);
 		}
 		
-		if (this.getParent() instanceof SVGStructuralElementImpl) {
-			SVGStructuralElementImpl parent = (SVGStructuralElementImpl) this.getParent();
-			if (parent != null) {
-				p = parent.convertCoordinate(p);
+		if (this.viewportTransformList != null && this.viewportTransformList.getAnimVal() != null) {
+			
+			// Viewport-Transformationen anwenden
+			SVGTransformList transformList = this.viewportTransformList.getAnimVal();
+			p = convertCoordinateByTransformList(p1, p, transformList);
+			
+		} else {
+		
+			// Parent-Transformationen anwenden
+			if (this.getParent() instanceof SVGStructuralElementImpl) {
+				SVGStructuralElementImpl parent = (SVGStructuralElementImpl) this.getParent();
+				if (parent != null) {
+					p = parent.convertCoordinate(p);
+				}
 			}
 		} 
+		return p;
+	}
+	
+	/**
+	 * 
+	 * @param p1
+	 * @param p
+	 * @param transformList
+	 * @return
+	 */
+	private Point2D.Float convertCoordinateByTransformList(Point2D.Float p1,
+			Point2D.Float p, SVGTransformList transformList) {
+		for (long i=transformList.getNumberOfItems()-1; i>=0; i--) {
+			SVGTransformImpl transformImpl = (SVGTransformImpl) transformList.getItem(i);
+			Point2D.Float q = p1;
+			p = transformImpl.transform(p);
+			logger.info(String.format("SVGSVGElementImpl::convertCoordinate From=%f/%f To=%f/%f",
+					q.x, q.y, p.x, p.y));
+		}
 		return p;
 	}
 	

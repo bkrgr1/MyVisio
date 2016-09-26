@@ -5,70 +5,51 @@
     </desc>
     
 	<shape-sets>
-		<set name="StandardShapes" xmlns="http://de.bkroeger.de/2015/myvisio">
-		</set>
+		<set name="StandardShapes" />
 	</shape-sets>
 	
 	<pages>
-		<page pageno="1" uuid="" name="" version="1.1" xmlns="http://www.w3.org/2000/svg"
-				x="0" y="0" width="300" height="240">
+		<page pageno="1" name="" version="1.1" xmlns="http://www.w3.org/2000/svg"
+		    uuid="93c3ea24-2a2c-4f7d-808d-55537f137e60"
+			width="792" height="648">
 
-				<desc>
-					Zeige das Template in 3 Spalten und 2 Zeilen an.
-					Je Shape eine
-					Box von 100x100 + Textbox von 100x20
-				</desc>
-
-				<shape id="Shape1">
+				<shape id="Shape1" uuid="a0548aa8-80fb-11e6-ae22-56b6b6499611"
+				    transform="translate(38, 38)" >
 					<title>Square Group</title>
-
-					<box class="shapeBox">
-
+					<g class="shapeBox">
 						<rect x="30" y="30" width="40" height="40" stroke="yellow"
 							fill="brown">
-							<title>Square</title>
-							<desc>Ein Quadrat</desc>
 						</rect>
-					</box>
-					<text x="5" y="102">Square</text>
+					</g>
 				</shape>
 
-				<shape id="Shape2" transform="translate(100, 0)">
+				<shape id="Shape2" uuid="ef3e246c-80fb-11e6-ae22-56b6b6499611" 
+				    transform="translate(100, 10)">
 					<title>Circle Group</title>
-
 					<g class="shapeBox">
 						<circle cx="50" cy="50" r="20" fill="#ffaa00" stroke="black"
 							stroke-width="1px" stroke-dasharray="2 2">
-							<title>Circle</title>
-							<desc>Ein Kreis</desc>
 						</circle>
 					</g>
-					<text x="5" y="102">Circle</text>
 				</shape>
 
-				<shape id="Shape3" transform="translate(200, 0)">
+				<shape id="Shape3" uuid="2217e116-80fc-11e6-ae22-56b6b6499611"
+				    transform="translate(200, 100)">
 					<title>Ellipse Group</title>
-
 					<g class="shapeBox">
 						<ellipse cx="50" cy="50" rx="30" ry="20" stroke="blue"
 							stroke-width="1px" stroke-dasharray="7 , 3" fill="red">
-							<title>Ellipse</title>
-							<desc>Eine Ellipse</desc>
 						</ellipse>
 					</g>
-					<text x="5" y="118">Ellipse</text>
 				</shape>
 
-				<shape id="Shape4" transform="translate(0,100)">
+				<shape id="Shape4" uuid="41139394-80fc-11e6-ae22-56b6b6499611"
+				    transform="translate(0,100)">
 					<title>Triangle Group</title>
-
 					<g class="shapeBox">
 						<path d="M 10 90 L 50 10 L 90 90 z">
-							<title>Triangle</title>
-							<desc>Ein Dreieck</desc>
 						</path>
 					</g>
-					<text x="5" y="238">Triangle</text>
 				</shape>
 
 		</page>

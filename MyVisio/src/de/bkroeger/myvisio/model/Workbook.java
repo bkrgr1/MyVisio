@@ -172,7 +172,7 @@ public class Workbook {
 	public Worksheet getCurrentWorksheet() {
 		if (currentPageUUID == null) return null;
 		for (Worksheet sheet : worksheets) {
-			if (sheet.getUuid() == currentPageUUID) return sheet;
+			if (sheet.getUUID() == currentPageUUID) return sheet;
 		}
 		return null;
 	}
@@ -517,6 +517,7 @@ public class Workbook {
 				case PAGE_TAG:
 					Worksheet sheet = new Worksheet(this);
 					sheet.parseXml(elem);
+					this.addWorksheet(sheet);
 					break;
 					
 				default:

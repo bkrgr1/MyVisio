@@ -3,7 +3,6 @@ package de.bkroeger.myvisio.controller;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

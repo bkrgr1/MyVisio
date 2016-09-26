@@ -217,7 +217,7 @@ public class SVGTransformImpl implements SVGTransform, Serializable {
 				this.matrix.getA(), this.matrix.getB(), this.matrix.getC(),
 				this.matrix.getD(), this.matrix.getE(), this.matrix.getF());
 		case SVGTransform.SVG_TRANSFORM_ROTATE:
-			return String.format("rotate(%.f)", this.angle);
+			return String.format("rotate(%.3f)", this.angle);
 		case SVGTransform.SVG_TRANSFORM_SCALE:
 			return String.format("scale(%.3f %.3f)", this.x, this.y);
 		case SVGTransform.SVG_TRANSFORM_SKEWX:

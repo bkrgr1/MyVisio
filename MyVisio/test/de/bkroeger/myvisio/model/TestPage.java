@@ -14,7 +14,7 @@ public class TestPage {
 		
 		Workbook visioDoc = Mockito.mock(Workbook.class);
 		Worksheet worksheet = Worksheet.createDefaultWorksheet(visioDoc);
-		Assert.assertNotNull(worksheet.getUuid());
+		Assert.assertNotNull(worksheet.getUUID());
 		Assert.assertNotNull(worksheet.getPageNo());
 		Assert.assertNotNull(worksheet.getDocument());
 	}

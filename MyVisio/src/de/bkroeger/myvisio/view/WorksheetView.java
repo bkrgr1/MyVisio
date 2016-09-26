@@ -5,8 +5,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
@@ -96,18 +94,21 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	 */
 	private float scaleFactor = 1.0f;
 
+	/**
+	 * @return - ScaleFactor
+	 */
 	public float getScaleFactor() {
 		return scaleFactor;
 	}
 
+	/**
+	 * @param factor
+	 */
 	public void setScaleFactor(float factor) {
 		this.scaleFactor = factor;
 		repaint();
 	}
 
-	private boolean firstPaint = true;
-
-	@SuppressWarnings("unused")
 	private WorksheetController controller;
 
 	private Rule columnView;
@@ -117,8 +118,7 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 
 	/**
 	 * Konstruktor.
-	 * 
-	 * @param worksheet
+	 * @param controller 
 	 */
 	public WorksheetView(WorksheetController controller) {
 
@@ -139,9 +139,9 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 		if (canvas != null) {
 			columnView.setPreferredWidth(1000);
 			rowView.setPreferredHeight(1000);
-		} else {
-			columnView.setPreferredWidth(320);
-			rowView.setPreferredHeight(480);
+//		} else {
+//			columnView.setPreferredWidth(320);
+//			rowView.setPreferredHeight(480);
 		}
 
 		// Create the corners.
@@ -153,7 +153,8 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 		buttonCorner.add(isMetric);
 
 		// Set up the scroll pane.
-		picture = new ScrollablePicture(canvas, columnView.getIncrement());
+//		picture = new ScrollablePicture(canvas, columnView.getIncrement(), controller);
+		picture = new ScrollablePicture(null, columnView.getIncrement(), controller);
 		JScrollPane pictureScrollPane = new JScrollPane(picture);
 		pictureScrollPane.setPreferredSize(new Dimension(300, 250));
 		pictureScrollPane.setViewportBorder(BorderFactory
@@ -187,35 +188,8 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	}
 
 	/**
-	 * Zeichnet alle Elemente der Seite neu.
+	 * @param title
 	 */
-
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-
-		@SuppressWarnings("unused")
-		Graphics2D g2d = (Graphics2D) g;
-		// // aktuelle Dimension des Canvas
-		// @SuppressWarnings("unused")
-		// Dimension dim = this.getSize();
-		//
-		// // aus diesen Werten wird die View-Spezifikation generiert
-		// // Scale-Factor = 1.0
-		// SVGRect initialViewport = new SVGRectImpl(0.0f, 0.0f, -1.0f, -1.0f);
-		// // (float)dim.width, dim.height);
-		//
-		// // beim ersten mal...
-		// if (firstPaint == true) {
-		// // Viewport übertragen
-		// workSheet.getSVGRoot().negotiateViewport(initialViewport);
-		// firstPaint = false;
-		// }
-		//
-		// // die SVG-Struktur zeichnen
-		// workSheet.getSVGRoot().verifySvgHierarchy(logger, 0);
-		// workSheet.getSVGRoot().paint(g2d);
-	}
-
 	public void setTitle(String title) {
 		JTabbedPane tabbedPane = (JTabbedPane) SwingUtilities
 				.getAncestorOfClass(JTabbedPane.class, this);
@@ -268,14 +242,6 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 		// Auto-generated method stub
 	}
 
-	/**
-	 * <p>
-	 * Called if the user has modified the current drop gesture.
-	 * </p>
-	 * 
-	 * @param - Event-Struktur
-	 */
-
 	public void dropActionChanged(DropTargetDragEvent e) {
 		// Auto-generated method stub
 	}
@@ -283,9 +249,8 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	/**
 	 * The user is no longer dragging over us, so restore the border </p>
 	 * 
-	 * @param - Event-Struktur
+	 * @param e - Event-Struktur
 	 */
-
 	public void dragExit(DropTargetEvent e) {
 
 		this.setBorder(normalBorder);
@@ -401,6 +366,7 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	 * 
 	 * @author bk
 	 */
+	@SuppressWarnings("unused")
 	private class ComponentActionListener implements ComponentListener {
 
 		public void componentResized(ComponentEvent e) {
@@ -431,6 +397,7 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	 * 
 	 * @author bk
 	 */
+	@SuppressWarnings("unused")
 	private class MouseActionListener implements MouseListener {
 
 		private WorksheetView canvas;
@@ -557,6 +524,7 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	 * 
 	 * @author bk
 	 */
+	@SuppressWarnings("unused")
 	private class MouseMotionActionListener implements MouseMotionListener {
 
 		public void mouseDragged(MouseEvent e) {
@@ -585,6 +553,7 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	 * 
 	 * @author bk
 	 */
+	@SuppressWarnings("unused")
 	private class MouseWheelActionListener implements MouseWheelListener {
 
 		public void mouseWheelMoved(MouseWheelEvent e) {
@@ -602,6 +571,7 @@ public class WorksheetView extends JPanel implements DropTargetListener, ItemLis
 	 * 
 	 * @author bk
 	 */
+	@SuppressWarnings("unused")
 	private class KeyActionListener implements KeyListener {
 
 		private WorksheetView canvas;

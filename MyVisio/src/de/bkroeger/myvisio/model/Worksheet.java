@@ -45,6 +45,10 @@ public class Worksheet extends SVGSVGElementImpl implements Page {
 	private static final long serialVersionUID = -872125158831656224L;
 
 	private static final Logger logger = Logger.getLogger(SVGSVGElementImpl.class.getName());
+//	
+//	private SVGRect viewport;
+//	
+//	private SVGAnimatedTransformList savedTransformList;
 
 	/**
 	 * Sichtbare Seitenummer.
@@ -58,15 +62,15 @@ public class Worksheet extends SVGSVGElementImpl implements Page {
 	 * @param pageNo
 	 */
 	public void setPageNo(String pageNo) { this.pageNo = pageNo; }
-	
-	/**
-	 * Die interne Id der Seite.
-	 */
-	private UUID uuid = UUID.randomUUID();
-	/**
-	 * @return - UUID
-	 */
-	public UUID getUuid() { return uuid; }
+//	
+//	/**
+//	 * Die interne Id der Seite.
+//	 */
+//	private UUID uuid = UUID.randomUUID();
+//	/**
+//	 * @return - UUID
+//	 */
+//	public UUID getUuid() { return uuid; }
 	
 	/**
 	 * Die Größe der Seite in Pixel
@@ -217,6 +221,24 @@ public class Worksheet extends SVGSVGElementImpl implements Page {
 		// ein SVGRoot-Element für diese Seite anlegen
 		svgRoot = new SVGSVGElementImpl();
 	}
+//	
+//	/**
+//	 * @param viewport 
+//	 */
+//	public void negotiateViewport(SVGElement viewport) {
+//		
+//		if (viewport instanceof SVGRectElement && viewport != null) {
+//			SVGRectElement rectElem = (SVGRectElement)viewport;
+//			
+//			SVGRect rect = new SVGRectImpl();
+//			rect.setHeight(rectElem.getHeight().getAnimVal().getValue());
+//			rect.setWidth(rectElem.getWidth().getAnimVal().getValue());
+//			
+//			super.negotiateViewport(rect);
+////		} else {
+////			throw new TechnicalException("Invalid viewport element. Type="+viewport.getClass().getName());
+//		}
+//	}
 
 	/**
 	 * <p>
@@ -374,8 +396,8 @@ public class Worksheet extends SVGSVGElementImpl implements Page {
 	private void parseAttributes(Element elem) throws TechnicalException {
 		
 		
-		if (elem.hasAttribute("id")) {
-			String uuidString = elem.getAttribute("id");
+		if (elem.hasAttribute("uuid")) {
+			String uuidString = elem.getAttribute("uuid");
 			this.uuid = UUID.fromString(uuidString);
 		}
 		
@@ -383,8 +405,14 @@ public class Worksheet extends SVGSVGElementImpl implements Page {
 			this.pageNo = elem.getAttribute("no");
 		}
 		
-		if (elem.hasAttribute("dimension")) {
-			this.pageDimension = PageDimension.parseXML(elem.getAttribute("dimension"));
+		if (elem.hasAttribute("width")) {
+			Float l = Float.parseFloat(elem.getAttribute("width"));
+			setWidth(new SVGAnimatedLengthImpl(new SVGLengthImpl(l)));
+		}
+		
+		if (elem.hasAttribute("height")) {
+			Float l = Float.parseFloat(elem.getAttribute("height"));
+			setHeight(new SVGAnimatedLengthImpl(new SVGLengthImpl(l)));
 		}
 		
 		if (elem.hasAttribute("zoom")) {
@@ -432,12 +460,16 @@ public class Worksheet extends SVGSVGElementImpl implements Page {
 		parsePresentationAttributes(elem);
 		
 		// horizontale Position
-		this.x = new SVGAnimatedLengthImpl(
-			new SVGLengthImpl(Float.parseFloat(elem.getAttribute("x"))));
+		if (elem.hasAttribute("x")) {
+			this.x = new SVGAnimatedLengthImpl(
+				new SVGLengthImpl(Float.parseFloat(elem.getAttribute("x"))));
+		}
 		
 		// y
-		this.y = new SVGAnimatedLengthImpl(
-			new SVGLengthImpl(Float.parseFloat(elem.getAttribute("y"))));
+		if (elem.hasAttribute("y")) {
+			this.y = new SVGAnimatedLengthImpl(
+				new SVGLengthImpl(Float.parseFloat(elem.getAttribute("y"))));
+		}
 		
 		// width
 		if (elem.hasAttribute("width"))

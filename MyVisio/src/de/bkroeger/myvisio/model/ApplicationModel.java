@@ -275,7 +275,7 @@ public class ApplicationModel extends AbstractModel {
 				Workbook workbook = null;
 				try {
 					workbook = new Workbook(filename);
-					workbook.load(file);
+//					workbook.load(file);
 				} catch(TechnicalException e) {
 					e.printStackTrace();
 					logger.severe(e.getMessage());

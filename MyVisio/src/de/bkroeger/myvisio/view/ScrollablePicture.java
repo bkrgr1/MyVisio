@@ -33,39 +33,57 @@ package de.bkroeger.myvisio.view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.logging.Logger;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
+import javax.swing.tree.TreeNode;
+
+import org.w3c.dom.svg.SVGRect;
+
+import de.bkroeger.myvisio.controller.WorksheetController;
+import de.bkroeger.myvisio.svg.SVGRectImpl;
+import de.bkroeger.myvisio.svg.elements.SVGStructuralElementImpl;
 
 /**
  * @author Oracle
  */
-public class ScrollablePicture extends JLabel implements Scrollable,
+public class ScrollablePicture extends JPanel implements Scrollable,
 		MouseMotionListener {
 
 	private static final long serialVersionUID = -5900209359644606551L;
+
+	protected static final Logger logger = Logger.getLogger(ScrollablePicture.class
+			.getName());
 	
 	private int maxUnitIncrement = 1;
 	private boolean missingPicture = false;
+	private WorksheetController controller;
 
 	/**
 	 * @param canvas
 	 * @param m
 	 */
-	public ScrollablePicture(Canvas canvas, int m) {
+	public ScrollablePicture(Canvas canvas, int m, WorksheetController controller) {
 		super();
+		
 		if (canvas == null) {
 			missingPicture = true;
-			setText("No picture found.");
-			setHorizontalAlignment(CENTER);
+//			setText("No picture found.");
+//			setHorizontalAlignment(CENTER);
 			setOpaque(true);
 			setBackground(Color.white);
 		}
 		maxUnitIncrement = m;
+		this.controller = controller;
 
 		// Let the user scroll by dragging to outside the window.
 		setAutoscrolls(true); // enable synthetic drag events
@@ -138,5 +156,49 @@ public class ScrollablePicture extends JLabel implements Scrollable,
 	 */
 	public void setMaxUnitIncrement(int pixels) {
 		maxUnitIncrement = pixels;
+	}
+
+	/**
+	 * Zeichnet alle Elemente der Seite neu.
+	 * 
+	 * @param g - Graphics
+	 */
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		Dimension dim = this.getSize();
+		float width = dim.width;
+		float height = dim.height;
+		
+		Point location = this.getLocation();
+		float posX = location.x;
+		float posY = location.y;
+		
+		try {
+			SVGRect initialViewport = new SVGRectImpl(posX, posY, width, height);
+			logger.info(String.format("Set sheet viewport: x=%f y=%f width=%f height=%f", posX, posY, width, height));
+			
+			logger.info("WorksheetController.getModel="+controller.getModel().getClass().getName());
+			controller.getModel().negotiateViewport(initialViewport);
+			
+			Graphics2D g2d = (Graphics2D) g;
+			
+			// alle Child-Nodes durcharbeiten; dies sind die Shapes
+			TreeNode node = controller.getModel().getFirstChild();
+			while (node != null) {
+				
+				if (node instanceof SVGStructuralElementImpl) {
+					SVGStructuralElementImpl svgElem = (SVGStructuralElementImpl)node;
+					
+					svgElem.paint(g2d);
+				}
+				
+				node = controller.getModel().getNextSibling();
+			}
+			
+		} finally {
+			// temporären Viewport wieder löschen
+			controller.getModel().negotiateViewport(null);
+		}
 	}
 }
